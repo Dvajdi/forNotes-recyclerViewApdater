@@ -35,7 +35,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
 
     IUpdate onUpdate = (logic) -> {
         data = logic.data;
-        Log.d("my","tut");
         if(updater!=null){
             updater.update();
         }

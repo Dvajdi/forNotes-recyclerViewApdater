@@ -2,7 +2,6 @@ package app.forge.twice.animationtest.models;
 
 import android.annotation.SuppressLint;
 import android.os.Handler;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -37,6 +36,11 @@ public class Manager implements IManager {
                     timer.scheduleAtFixedRate(new MyTimerTask(), 0, 1000);
                 }
 
+            } else {
+                if (timer != null) {
+                    timer.cancel();
+                    timer = null;
+                }
             }
 
         }
@@ -44,13 +48,16 @@ public class Manager implements IManager {
 
     public void start(Contact contact) {
         Thread t = new Thread(() -> {
-            for (int i = 60; i >= 0; i--) {
+            for (int i = 10; i >= 0; i--) {
                 contact.name = "Privet" + i;
                 h.sendEmptyMessage(0);
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                }
+                if (i == 0) {
+                    h.sendEmptyMessage(1);
                 }
             }
         });
